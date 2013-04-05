@@ -1,0 +1,21 @@
+<section class="view">
+    <header>
+        
+        <!--<a class="btn btn-info btn-force-refresh pull-right" 
+           data-bind="click: refresh" href="#"><i class="icon-refresh"></i> Refresh</a>-->
+
+        <h3 class="page-title" data-bind="text: title"></h3>
+        <div class="article-counter">
+            <address data-bind="text: bookmarks().length"></address>
+            <address>found</address>
+        </div>
+    </header>
+    <section class="view-list" data-bind="foreach: bookmarks">
+        <article class="article-left-content">
+            <div class="bookmark-brief" title="Go to bookmark details">
+                <h1 data-bind="text: title"></h1>
+                <address data-bind="text: description"></address>
+            </div>
+        </article>
+    </section>
+</section>
