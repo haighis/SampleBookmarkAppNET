@@ -3,7 +3,7 @@
     toastr.options.positionClass = 'toast-bottom-right';
 
     var remoteServiceName = 'http://localhost:13763/rest/bookmark/';
-
+    var isJavaWebService = false;
     var routes =
     [
     
