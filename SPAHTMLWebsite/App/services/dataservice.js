@@ -44,7 +44,7 @@
             //var bookmark;
             // set ajax call
             var options = {
-                url: config.remoteServiceName,//'http://localhost:13763/rest/bookmark/',
+                url: config.remoteServiceName,
                 data: { id: id },
                 type: 'GET',
                 dataType: 'json'
@@ -76,7 +76,7 @@
                 dataType: "json",
                 data: JSON.stringify({ "id": unmappedBookmark.id, "title": unmappedBookmark.title, "url": unmappedBookmark.url, "description": unmappedBookmark.description })
                 }).done(function(data) {
-                    log('Successfully added bookmark with remote data source', data, true);
+                    log('Successfully updated bookmark with remote data source', data, true);
                 }
                 ).fail(queryFailed);
     
@@ -104,9 +104,7 @@
             //    .then(querySucceeded)
             //    .fail(queryFailed);
 
-            function querySucceeded(data, textStatus, jqXHR) {
-                log('Successfully updated bookmark with remote data source' + textStatus, data, true);
-            }
+            
         };
 
         var addBookmark = function (unmappedBookmark) {

@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Booky.WebAPI.Models;
 using Newtonsoft.Json.Linq;
+//using System.Web.Http.Description;
 
 namespace Booky.WebAPI.Controllers
 {
@@ -18,8 +19,10 @@ namespace Booky.WebAPI.Controllers
         {
             return repository.Bookmarks;
         }
-
+        
         // GET HTTP method/verb - /api/bookmark/1
+        //[ApiDoc("Gets a Bookmark by ID.")]
+        //[ApiParameterDoc("id", "The ID of the Bookmark.")] 
         public Bookmark Get(int id)
         {
             var b = repository.Bookmarks.FirstOrDefault(o => o.Id == id);
@@ -34,19 +37,33 @@ namespace Booky.WebAPI.Controllers
         /// </summary>
         /// <param name="bookmark"></param>
         /// <returns></returns> 
-        public Bookmark Post(Bookmark bookmark)
+        public HttpResponseMessage Post(Bookmark bookmark)
         {
+            //Create new bookmark
             repository.Bookmarks.Add(bookmark);
             repository.SaveChanges();
-            return bookmark;
+
+            //Create a new response with an HttpStatusCode of Created 201
+            var response = Request.CreateResponse<Bookmark>(HttpStatusCode.Created, bookmark);
+            return response;
         }
+
+        /*****/////////////////////////////////////////////
+        /** Another option is to return an object rather than a HttpResponseMessage (return a bookmark) Bookmark
+        /*****/////////////////////////////////////////////
+        //public Bookmark Post(Bookmark bookmark)
+        //{
+        //    repository.Bookmarks.Add(bookmark);
+        //    repository.SaveChanges();
+        //    return bookmark;
+        //}
 
         /// <summary>
         /// Updates an existing Bookmark - PUT HTTP method/verb - /api/defect
         /// </summary>
         /// <param name="bookmark"></param>
         /// <returns></returns>
-        public Bookmark Put(Bookmark bookmark)
+        public /*Bookmark*/ Put(Bookmark bookmark)
         {
             var existBookmark = repository.Bookmarks.FirstOrDefault(o => o.Id == bookmark.Id);
             existBookmark.Title = bookmark.Title;
