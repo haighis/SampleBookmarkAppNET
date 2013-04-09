@@ -33,14 +33,14 @@
      //Add Bookmark   
      //---------------------------------------   
 
-    //,
-    //{
-    //    url: 'bookmarkadd',
-    //    moduleId: 'viewmodels/bookmarkadd',
-    //    name: 'Add Bookmark',
-    //    visible: false,
-    //    caption: 'Add Bookmark'
-    //}
+    ,
+    {
+        url: 'bookmarkadd',
+        moduleId: 'viewmodels/bookmarkadd',
+        name: 'Add Bookmark',
+        visible: false,
+        caption: 'Add Bookmark'
+    }
    
     ];
     

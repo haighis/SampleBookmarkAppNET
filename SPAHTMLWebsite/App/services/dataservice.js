@@ -44,7 +44,7 @@
             //var bookmark;
             // set ajax call
             var options = {
-                url: 'http://localhost:13763/rest/bookmark/',
+                url: config.remoteServiceName,//'http://localhost:13763/rest/bookmark/',
                 data: { id: id },
                 type: 'GET',
                 dataType: 'json'
@@ -65,9 +65,102 @@
             }
         };
 
+        var updateBookmark = function (bookmarkObservable) {
+
+            var unmappedBookmark = ko.toJS(bookmarkObservable);
+
+            return $.ajax({
+                type: 'PUT',
+                contentType: 'application/json',
+                url: config.remoteServiceName + unmappedBookmark.id,
+                dataType: "json",
+                data: JSON.stringify({ "id": unmappedBookmark.id, "title": unmappedBookmark.title, "url": unmappedBookmark.url, "description": unmappedBookmark.description })
+                }).done(function(data) {
+                    log('Successfully added bookmark with remote data source', data, true);
+                }
+                ).fail(queryFailed);
+    
+
+            //function queryFailed(jqXHR, textStatus) {
+                //var msg = 'Error getting data. ' + textStatus;
+                //logger.log(msg,
+                //    jqXHR,
+                //    system.getModuleId(dataservice),
+                //    true);
+            //}
+
+            // set ajax call
+            //var options = {
+            //    type: 'PUT',
+            //    contentType: 'application/json',
+            //    url: config.remoteServiceName,
+            //    dataType: 'json',
+            //    data: JSON.stringify({ "id": unmappedBookmark.id, "title": unmappedBookmark.title, "url": unmappedBookmark.url, "description": unmappedBookmark.description })
+            //    //data: JSON.stringify({ "id": bookmarkObservable.id, "title": bookmarkObservable.title, "url": bookmarkObservable.url, "description": bookmarkObservable.description })
+            //};
+
+            //// make call
+            //return $.ajax(options)
+            //    .then(querySucceeded)
+            //    .fail(queryFailed);
+
+            function querySucceeded(data, textStatus, jqXHR) {
+                log('Successfully updated bookmark with remote data source' + textStatus, data, true);
+            }
+        };
+
+        var addBookmark = function (unmappedBookmark) {
+
+            return $.Deferred(function (deferredObject) {
+                
+                $.ajax({
+                    type: 'POST',
+                    contentType: 'application/json',
+                    url: config.remoteServiceName,
+                    dataType: "json",
+                    data: JSON.stringify({ "title": unmappedBookmark.title, "url": unmappedBookmark.url, "description": unmappedBookmark.description })
+                    //Ajax promises
+                }).done(function (data) {
+
+                    log('Successfully added bookmark with remote data source', data, true);
+                    deferredObject.resolve(data);
+                }
+                ).fail(function (jqXHR, textStatus) {
+
+                    queryFailed(jqXHR, textStatus);
+                    deferredObject.reject();
+                }
+                );
+
+            }
+            ).promise();
+            
+            
+            
+            
+            //// set ajax call
+            //var options = {
+            //    url: config.remoteServiceName,
+            //    type: 'POST',
+            //    dataType: 'json',
+            //    data: JSON.stringify({ "title": unmappedBookmark.title, "url": unmappedBookmark.url, "description": unmappedBookmark.description })
+            //};
+
+            //// make call
+            //return $.ajax(options)
+            //    .then(querySucceeded)
+            //    .fail(queryFailed);
+
+            //function querySucceeded(data, textStatus, jqXHR) {
+            //    log('Successfully added bookmark with remote data source' + textStatus, data, true);
+            //}
+        };
+        
         var dataservice = {
             getBookmarksPartials: getBookmarksPartials,
-            getBookmarkById: getBookmarkById
+            getBookmarkById: getBookmarkById,
+            addBookmark: addBookmark,
+            updateBookmark: updateBookmark
         };
         return dataservice;
 
@@ -76,7 +169,6 @@
         //    return (s1.firstName + s1.lastName > s2.firstName + s2.lastName)
         //        ? 1 : -1;
         //}
-
 
         function queryFailed(jqXHR, textStatus) {
             var msg = 'Error getting data. ' + textStatus;

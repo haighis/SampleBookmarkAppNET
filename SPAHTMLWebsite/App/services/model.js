@@ -6,18 +6,24 @@
         return mapToObservable(dto);
     };
 
+    //TODO remove ..redundant..use partial above
     var Bookmark = function (dto) {
         return mapToObservable(dto);
+    };
+
+    var BookmarkItem = function () {
+       
         //var self = this;
-        //self.id = ko.observable();
-        //self.title = ko.observable();
-        //self.url = ko.observable();
-        //self.description = ko.observable();
-        //return self;
+        this.id = ko.observable();
+        this.title = ko.observable();
+        this.url = ko.observable();
+        this.description = ko.observable();
+        return this;
     };
 
     var model =
     {
+        BookmarkItem: BookmarkItem,
         BookmarksPartial: BookmarksPartial,
         Bookmark: Bookmark
     };
@@ -34,17 +40,6 @@
         }
         return mapped;
     };
-
-    //function addSpeakerPartialComputeds(entity) {
-    //    entity.fullName = ko.computed(function () {
-    //        return entity.firstName() + ' '
-    //            + entity.lastName();
-    //    });
-    //    entity.imageName = ko.computed(function () {
-    //        return makeImageName(entity.imageSource());
-    //    });
-    //    return entity;
-    //};
         
     function log(msg, data, showToast) {
         logger.log(msg, data, system.getModuleId(model), showToast);

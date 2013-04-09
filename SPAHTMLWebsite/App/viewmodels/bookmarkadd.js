@@ -1,27 +1,30 @@
-define(['durandal/app', 'services/dataservice', 'durandal/plugins/router'],
-    function (app, dataservice, router) {
+define(['durandal/app', 'services/dataservice', 'durandal/plugins/router','services/model'],
+    function (app, dataservice, router,model) {
         var isSaving = ko.observable(false),
             
             bookmark = ko.observable(),
             
             activate = function () {
-                bookmark(dataservice.createClient());
+                bookmark(model.BookmarkItem());
+                
+
             },
             cancel = function (complete) {
                 router.navigateBack();
             },
-            hasChanges = ko.computed(function () {
-                return dataservice.hasChanges();
-            }),
-            canSave = ko.computed(function () {
-                return hasChanges() && !isSaving();
-            }),
+          
             save = function () {
                 isSaving(true);
-                dataservice.saveChanges()
-                    .then(goToEditView).fin(complete);
+                
+                //Create an unmapped javascript object from the kn obvservable and pass this to the dataservice
+                var unmappedBookmark = ko.toJS(bookmark);
+
+                dataservice.addBookmark(unmappedBookmark)
+                    .then(goToEditView).always(complete);
 
                 function goToEditView(result) {
+                    //Update our bookmark observable with the dataservice result
+                    bookmark(result);
                     router.replaceLocation('#/bookmarkdetail/' + bookmark().id());
                 }
 
@@ -45,12 +48,10 @@ define(['durandal/app', 'services/dataservice', 'durandal/plugins/router'],
 
         var vm = {
             activate: activate,
-            canDeactivate: canDeactivate,
-            canSave: canSave,
+           // canDeactivate: canDeactivate,
             cancel: cancel,
-            hasChanges: hasChanges,
             save: save,
-            bookmark:bookmark,
+            bookmark: bookmark,
             title: 'Add a New Bookmark'
            
         };

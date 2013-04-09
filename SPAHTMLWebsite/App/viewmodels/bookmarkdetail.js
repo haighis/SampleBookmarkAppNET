@@ -25,7 +25,7 @@
         });
 
         var cancel = function() {
-            dataservice.cancelChanges();
+            //dataservice.cancelChanges();
         };
 
         var canSave = ko.computed(function() {
@@ -36,7 +36,8 @@
         
         var save = function () {
             isSaving(true);
-            return dataservice.saveChanges().fin(complete);
+
+            return dataservice.updateBookmark(bookmark).then(complete);
             
             function complete() {
                 isSaving(false);
