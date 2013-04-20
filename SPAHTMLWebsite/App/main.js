@@ -9,7 +9,7 @@ define(function(require) {
         viewLocator= require('durandal/viewLocator'),
         logger = require('services/logger');
 
-    system.debug(true);
+    system.debug(false);
     
     app.start().then(function () {
         // route will use conventions for modules

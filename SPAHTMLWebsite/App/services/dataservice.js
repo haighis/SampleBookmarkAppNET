@@ -126,7 +126,7 @@
                 ).fail(function (jqXHR, textStatus) {
 
                     queryFailed(jqXHR, textStatus);
-                    deferredObject.reject();
+                    deferredObject.reject();//If we fail, we return a deferred object reject
                 }
                 );
 

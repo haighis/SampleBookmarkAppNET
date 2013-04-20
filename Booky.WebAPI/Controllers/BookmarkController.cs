@@ -39,7 +39,6 @@ namespace Booky.WebAPI.Controllers
         /// <returns></returns> 
         public HttpResponseMessage Post(Bookmark bookmark)
         {
-            //Create new bookmark
             repository.Bookmarks.Add(bookmark);
             repository.SaveChanges();
 
@@ -63,7 +62,7 @@ namespace Booky.WebAPI.Controllers
         /// </summary>
         /// <param name="bookmark"></param>
         /// <returns></returns>
-        public /*Bookmark*/ Put(Bookmark bookmark)
+        public Bookmark Put(Bookmark bookmark)
         {
             var existBookmark = repository.Bookmarks.FirstOrDefault(o => o.Id == bookmark.Id);
             existBookmark.Title = bookmark.Title;
