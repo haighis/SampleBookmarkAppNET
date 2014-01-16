@@ -1,4 +1,4 @@
-Booky is a single page application that will allow to manage share and find bookmarks. .NET Version.
+A single page application that will allow to manage share and find bookmarks. .NET Version.
 
 Single Page Application using the following technologies:
 - Durandal
@@ -13,5 +13,3 @@ RESTful web service using the following technologies:
 - SqlCE database 
 
 This is the .NET version that contains the frontend SPA application with a restful web service. There is also a Java version that uses the same frontend SPA application with a restful web service written in Java for Google App Engine with Google App Engine Datastore, Objectify, JAX-RS, JAXB.
-
-Java Version - https://github.com/haighis/Booky
